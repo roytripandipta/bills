@@ -12,10 +12,12 @@ require_once ("vendor/autoload.php");
 // $password = $_ENV["PASSWORD"];
 // $db = $_ENV["DATABASE"];
 
-$host = getenv("HOST");
-$user = getenv("USER_NAME");
-$password = getenv("PASSWORD");
 $db = getenv("DATABASE");
+$host = getenv("HOST");
+$password = getenv("PASSWORD");
+$user = getenv("USER_NAME");
+
+echo $db;
 
 $conn = mysqli_connect($host, $user, $password, $db);
 if($conn-> connect_error) {

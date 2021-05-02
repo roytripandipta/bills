@@ -17,7 +17,7 @@ $host = getenv("HOST");
 $password = getenv("PASSWORD");
 $user = getenv("USER_NAME");
 
-echo $db;
+// echo $db;
 
 $conn = mysqli_connect($host, $user, $password, $db);
 if($conn-> connect_error) {

@@ -2,8 +2,8 @@
 //call the FPDF library
 
 require ('fpdf17/fpdf.php');
-require_once ("vendor/autoload.php");
-\Dotenv\Dotenv::createImmutable(paths:__DIR__)->load();
+// require_once ("vendor/autoload.php");
+// \Dotenv\Dotenv::createImmutable(paths:__DIR__)->load();
 
 // echo var_dump($_ENV);
 // $host = $arr['HOST'];

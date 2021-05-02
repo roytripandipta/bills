@@ -7,10 +7,15 @@ require_once ("vendor/autoload.php");
 
 // echo var_dump($_ENV);
 // $host = $arr['HOST'];
-$host = $_ENV["HOST"];
-$user = $_ENV["USER_NAME"];
-$password = $_ENV["PASSWORD"];
-$db = $_ENV["DATABASE"];
+// $host = $_ENV["HOST"];
+// $user = $_ENV["USER_NAME"];
+// $password = $_ENV["PASSWORD"];
+// $db = $_ENV["DATABASE"];
+
+$host = getenv("HOST");
+$user = getenv("USER_NAME");
+$password = getenv("PASSWORD");
+$db = getenv("DATABASE");
 
 $conn = mysqli_connect($host, $user, $password, $db);
 if($conn-> connect_error) {

@@ -1,3 +1,3 @@
 .env
-vendor
-index1
+vendor/
+index_1.php

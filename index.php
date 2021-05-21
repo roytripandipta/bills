@@ -20,6 +20,30 @@
     
     <input type = "text" name="phone_number"  value="" placeholder="Mobile Number" /><br><br>
 
+    <select name = "billing_month">
+    <option name="" value="" disabled selected>Month</option>
+    <option value="January" value="Jan">January</option>
+    <option value="February" value="Feb">February</option>
+    <option value="March">March</option>
+    <option value="April">April</option>
+    <option value="May">May</option>
+    <option value="June">June</option>
+    <option value="July">July</option>
+    <option value="August">August</option>
+    <option value="September">September</option>
+    <option value="October">October</option>
+    <option value="November">November</option>
+    <option value="December">December</option>
+  </select><br/><br/>
+  <select name="billing_year">
+  <option name="" value="" disabled selected>YYYY</option>
+    <?php 
+      for($i = 2019 ; $i <= 2030; $i++){
+          echo "<option value=$i>$i</option>";
+      }
+    ?>
+  </select><br/><br/>
+
     <input type="submit" name="my_form_submit_button" 
            value="view pdf"/>
 

@@ -6,11 +6,20 @@ require ('fpdf17/fpdf.php');
 // \Dotenv\Dotenv::createImmutable(paths:__DIR__)->load();
 
 // echo var_dump($_ENV);
-// $host = $arr['HOST'];
-// $host = $_ENV["HOST"];
-// $user = $_ENV["USER_NAME"];
-// $password = $_ENV["PASSWORD"];
+
 // $db = $_ENV["DATABASE"];
+// $host = $arr['HOST'];
+// $password = $_ENV["PASSWORD"];
+// $user = $_ENV["USER_NAME"];
+
+// $db = "aspiredb";
+// $host = "13.126.97.63";
+// $password = "6r8y7dZs/j";
+// $user = "tripan";
+
+// echo $user;
+
+// echo "host"." ". $host;
 
 $db = getenv("DATABASE");
 $host = getenv("HOST");
@@ -29,7 +38,18 @@ if($conn-> connect_error) {
 // writable horizontal : 219-(10*2)=189mm
 
 // create pdf object
-$phone_number = $_GET['phone_number'];
+$phone_number = isset($_GET['phone_number']) ? $_GET['phone_number'] : "";
+$billing_month = isset($_GET['billing_month']) ? $_GET['billing_month'] : "";
+$billing_year = isset($_GET['billing_year']) ? $_GET['billing_year'] : "";
+if($phone_number == ""){
+	exit("please enter a phone number");
+}
+if($billing_month == ""){
+	exit("please select a month");
+}
+if($billing_year == ""){
+	exit("please select a year");
+}
 $pdf = new FPDF('P','mm','A4');
 //add new page
 $pdf->AddPage();
@@ -70,28 +90,8 @@ $payment_min = 0;
 $payment_max = 0;
 $amount_carry_forward = 0;
 $link = "";
- // $handle = fopen('D:/aspire_crons/Billing Automation/february2021_automated_bills.csv', 'r');
-// $handle = fopen('bills_to_be_generated.csv', 'r');
-//           while(($data = fgetcsv($handle)) !== FALSE) {
-//             //   echo $data[1];
-//             if($data[0] === $id) {
-//                 $user_name = $data[1];
-//                 $sanction_amount = $data[3];
-//                 $available_limit = $data[4];
-//                 $due_emi_this_month = $data[5];
-//                 $monthly_fee = $data[6];
-//                 $monthly_tax = $data[7];
-//                 $late_fee = $data[8];
-//                 $late_tax = $data[9];
-//                 $DPD = $data[10];
-//                 $payment_min = $data[11];
-//                 $payment_max = $data[12];
-//                 $amount_carry_forward = $data[13];
-//                 $link = $data[14];
-//             }
-//           }
-// fclose($handle);
-$sql_2 = "select * from billing_info where user_id = '{$id}'";
+
+$sql_2 = "select * from test_bills where user_id = '{$id}' and billing_month = '{$billing_month}' and billing_year = {$billing_year}";
 $result2 = $conn->query($sql_2);
 if($result2 -> num_rows > 0) {
 	while($row = $result2->fetch_assoc()) {
@@ -118,6 +118,7 @@ if($result-> num_rows > 0) {
 		$pdf->Cell(59 ,5,' ',0,1);//end of line
 		$pdf->SetFont('Arial','B',11);
 		$pdf->Cell(120,5,$row['user_name'],0,0);
+		// $pdf->Cell(120,5,$billing_year,0,0);
 		$x = $pdf->GetX();
 		$y = $pdf->GetY();
 		$pdf->SetXY($x, $y - 5);

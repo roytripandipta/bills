@@ -12,19 +12,15 @@ require ('fpdf17/fpdf.php');
 // $password = $_ENV["PASSWORD"];
 // $user = $_ENV["USER_NAME"];
 
-$db = "aspiredb";
-$host = "13.126.97.63";
-$password = "6r8y7dZs/j";
-$user = "tripan";
 
 // echo $user;
 
 // echo "host"." ". $host;
 
-// $db = getenv("DATABASE");
-// $host = getenv("HOST");
-// $password = getenv("PASSWORD");
-// $user = getenv("USER_NAME");
+$db = getenv("DATABASE");
+$host = getenv("HOST");
+$password = getenv("PASSWORD");
+$user = getenv("USER_NAME");
 
 // echo $db;
 

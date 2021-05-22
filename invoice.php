@@ -12,19 +12,19 @@ require ('fpdf17/fpdf.php');
 // $password = $_ENV["PASSWORD"];
 // $user = $_ENV["USER_NAME"];
 
-// $db = "aspiredb";
-// $host = "13.126.97.63";
-// $password = "6r8y7dZs/j";
-// $user = "tripan";
+$db = "aspiredb";
+$host = "13.126.97.63";
+$password = "6r8y7dZs/j";
+$user = "tripan";
 
 // echo $user;
 
 // echo "host"." ". $host;
 
-$db = getenv("DATABASE");
-$host = getenv("HOST");
-$password = getenv("PASSWORD");
-$user = getenv("USER_NAME");
+// $db = getenv("DATABASE");
+// $host = getenv("HOST");
+// $password = getenv("PASSWORD");
+// $user = getenv("USER_NAME");
 
 // echo $db;
 
@@ -130,7 +130,7 @@ if($result-> num_rows > 0) {
 		$pdf->SetFont('Arial','B',11);
 		$x = $pdf->GetX();
 		$y = $pdf->GetY();
-		$pdf->MultiCell(100,8,$row['address'].' '.$row['pin_code'],0,0);
+		$pdf->MultiCell(100,8,trim($row['address']).' '.$row['pin_code'],0,0);
 		$pdf->SetXY($x + 120, $y);
 		$pdf->Cell(60,5,'Due Date: 8 May 2021', 0, 1);
 		$x = $pdf->GetX();

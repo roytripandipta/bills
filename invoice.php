@@ -8,9 +8,10 @@ require ('fpdf17/fpdf.php');
 // echo var_dump($_ENV);
 
 // $db = $_ENV["DATABASE"];
-// $host = $arr['HOST'];
+// $host = $_ENV['HOST'];
 // $password = $_ENV["PASSWORD"];
 // $user = $_ENV["USER_NAME"];
+// echo "Database: ".$db;
 
 
 // echo $user;
@@ -22,7 +23,7 @@ $host = getenv("HOST");
 $password = getenv("PASSWORD");
 $user = getenv("USER_NAME");
 
-// echo $db;
+echo "database ".$db;
 
 $conn = mysqli_connect($host, $user, $password, $db);
 if($conn-> connect_error) {
@@ -154,25 +155,25 @@ if($result-> num_rows > 0) {
 		$pdf->Line($x,$y,$x + $x+120, $y);
 		$pdf->Cell(59 ,8,' ',0,1);//end of line
 		$pdf->Cell(120,8, 'Due EMI this month', 1, 0);
-		$pdf->Cell(60,8, $pdf->Image('inr.jpg',$pdf->GetX()+22,$pdf->GetY()+2, 3, 3).'     '.number_format($due_emi_this_month,2,'.',','), 1, 1,'C');
+		$pdf->Cell(60,8, $pdf->Image('inr.jpg',$pdf->GetX()+20,$pdf->GetY()+2, 3, 3).'     '.number_format($due_emi_this_month,2,'.',','), 1, 1,'C');
 
 		$pdf->Cell(120,8, 'Monthly Membership Fee', 1, 0);
-		$pdf->Cell(60,8, $pdf->Image('inr.jpg',$pdf->GetX()+22,$pdf->GetY()+2, 3, 3).'     '.number_format($monthly_fee,2,'.',','), 1, 1,'C');
+		$pdf->Cell(60,8, $pdf->Image('inr.jpg',$pdf->GetX()+20,$pdf->GetY()+2, 3, 3).'     '.number_format($monthly_fee,2,'.',','), 1, 1,'C');
 
 		$pdf->Cell(120,8, 'GST on Membership Fee', 1, 0);
-		$pdf->Cell(60,8, $pdf->Image('inr.jpg',$pdf->GetX()+22,$pdf->GetY()+2, 3, 3).'     '.number_format($monthly_tax,2,'.',','), 1, 1,'C');
+		$pdf->Cell(60,8, $pdf->Image('inr.jpg',$pdf->GetX()+20,$pdf->GetY()+2, 3, 3).'     '.number_format($monthly_tax,2,'.',','), 1, 1,'C');
 
 		$pdf->Cell(120,8, 'Late Fee', 1, 0);
-		$pdf->Cell(60,8, $pdf->Image('inr.jpg',$pdf->GetX()+22,$pdf->GetY()+2, 3, 3).'     '.number_format($late_fee,2,'.',','), 1, 1,'C');
+		$pdf->Cell(60,8, $pdf->Image('inr.jpg',$pdf->GetX()+20,$pdf->GetY()+2, 3, 3).'     '.number_format($late_fee,2,'.',','), 1, 1,'C');
 
 		$pdf->Cell(120,8, 'GST on Late Fee', 1, 0);
-		$pdf->Cell(60,8, $pdf->Image('inr.jpg',$pdf->GetX()+22,$pdf->GetY()+2, 3, 3).'     '.number_format($late_tax,2,'.',','), 1, 1,'C');
+		$pdf->Cell(60,8, $pdf->Image('inr.jpg',$pdf->GetX()+20,$pdf->GetY()+2, 3, 3).'     '.number_format($late_tax,2,'.',','), 1, 1,'C');
 
 		$pdf->Cell(120,8, 'Excess Payment Carry Forward', 1, 0);
-		$pdf->Cell(60,8, $pdf->Image('inr.jpg',$pdf->GetX()+22,$pdf->GetY()+2, 3, 3).'     '.number_format($amount_carry_forward,2,'.',','), 1, 1,'C');
+		$pdf->Cell(60,8, $pdf->Image('inr.jpg',$pdf->GetX()+20,$pdf->GetY()+2, 3, 3).'     '.number_format($amount_carry_forward,2,'.',','), 1, 1,'C');
 
 		$pdf->Cell(120,8, 'Net Due', 1, 0);
-		$pdf->Cell(60,8, $pdf->Image('inr.jpg',$pdf->GetX()+22,$pdf->GetY()+2, 3, 3).'     '.number_format($payment_min,2,'.',','), 1, 1,'C');
+		$pdf->Cell(60,8, $pdf->Image('inr.jpg',$pdf->GetX()+20,$pdf->GetY()+2, 3, 3).'     '.number_format($payment_min,2,'.',','), 1, 1,'C');
 
 		$pdf->Cell(59 ,8,' ',0,1);//end of line
 

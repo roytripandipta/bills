@@ -101,14 +101,7 @@ class PDF1 extends PDF
             $x2*$this->k, ($h-$y2)*$this->k, $x3*$this->k, ($h-$y3)*$this->k));
     }
 }
-// require(include/fpdf153/fpdf.php)
 
-//A4 width : 219mm
-//default margin : 10mm each side
-//writable horizontal : 219-(10*2)=189mm
-
-//create pdf object
-// $phone_number = $_GET['phone_number'];
 $pdf = new PDF1('P','mm','A4');
 //add new page
 $pdf->AddPage();
@@ -127,11 +120,6 @@ $pdf -> Rect($x-30,$y-2,60,9,'D');
 $pdf->SetLineWidth(0.2);
 $pdf->Cell(190 ,5,'April 2021 Statement',0,1,'C');//end of line
 $pdf->SetFont('Arial','B',11);
-
-// $conn = mysqli_connect("13.126.97.63", "tripan", "6r8y7dZs/j", "aspiredb");
-// if($conn-> connect_error) {
-//     die("Connection failed:".$conn-> connect_error);
-//     }
 
 $sql = "select id from user where phone_number = '{$phone_number}' limit 1";
 $res = $conn->query($sql);
@@ -161,8 +149,12 @@ $payment_min = 0;
 $payment_max = 0;
 $amount_carry_forward = 0;
 $link = "";
+$due_date = "";
+$last_day_prev_month = "";
+$first_day_timestamp = "";
+$first_day_date = "";
 
-$sql_2 = "select * from test_bills where user_id = '{$id}' and billing_month = '{$billing_month}' and billing_year = {$billing_year}";
+$sql_2 = "select * from billing_info where user_id = '{$id}' and billing_month = '{$billing_month}' and billing_year = {$billing_year}";
 $result2 = $conn->query($sql_2);
 if($result2 -> num_rows > 0) {
 	while($row = $result2->fetch_assoc()) {
@@ -179,7 +171,10 @@ if($result2 -> num_rows > 0) {
 		$payment_max = $row["payment_max"];
 		$amount_carry_forward = $row["amount_carry_forward"];
 		$link = $row["payment_link"];
-
+		$due_date = $row["due_date"];
+		$last_day_prev_month = $row["last_day_prev_month"];
+		$first_day_timestamp = $row["first_day_timestamp"];
+		$first_day_date = $row["first_day_date"];
 		break;
 	}
 }
@@ -212,14 +207,14 @@ if($result-> num_rows > 0) {
 		$pdf->SetXY($x + 120, $y-2);
 		$pdf->SetFont('Arial','B',15);
 		$pdf->SetTextColor(178,9,9);
-		$pdf->Cell(60,5,'Due Date: 8 December 2021', 0, 1);
+		$pdf->Cell(60,5,'Due Date: '.$due_date, 0, 1);
 		$pdf->SetTextColor(0,0,0);
 		$pdf->SetFont('Arial','B',11);
 		$x = $pdf->GetX();
 		$y = $pdf->GetY();
 		$pdf->SetXY($x + 120, $y+2);
 		$y = $pdf->GetY();
-		$pdf->MultiCell(60,5,'Late Charges:  300 + GST for payments after 8 May 2021',0,1);
+		$pdf->MultiCell(60,5,'Late Charges:  300 + GST for payments after '.$due_date,0,1);
 		$pdf->SetXY($x, $y+18);
 		$pdf->Cell(120,10,'Phone: '.$row['phone_number'],0,1);
 
@@ -279,7 +274,7 @@ if($result-> num_rows > 0) {
 
 		$pdf->Cell(59 ,8,' ',0,1);//end of line
 
-		$pdf->Cell(120,5,'Credit Line Standing as on 30th April',0,1);
+		$pdf->Cell(120,5,'Credit Line Standing as on '.$last_day_prev_month,0,1);
 		$x = $pdf->GetX();
 		$y = $pdf->GetY();
 		$pdf->Line($x,$y+2,$x+120, $y+2);
@@ -334,6 +329,7 @@ $sql = "SELECT
   WHERE
       m.user_id = '{$id}'
           AND m.`status` = 'success'
+		  AND m.created_time < '{$first_day_timestamp}'
 	order by m.created_time desc;";
 $result1 = $conn->query($sql);
 
@@ -357,10 +353,10 @@ $pdf->Cell(59 ,5,' ',0,1);//end of line
 $pdf->Cell(60,8,'Repayment Time', 1, 0);
 $pdf->Cell(60,8,'Amount', 1, 1);
 
-$payment_time = "2021-05-01 00:00:00";
+// $payment_time = "2021-05-01 00:00:00";
 $sql = "SELECT *
-from (select user_id, amount, substr(created_time,1,10) as payment_time from pay_now_summary where user_id = '{$id}' and `status` = 'success'
-union all select user_id, amount, substr(payment_time,1,10) as payment_time from repayment_details where user_id = '{$id}') tbl 
+from (select user_id, amount, substr(created_time,1,10) as payment_time from pay_now_summary where user_id = '{$id}' and `status` = 'success' and created_time < '{$first_day_timestamp}'
+union all select user_id, amount, substr(payment_time,1,10) as payment_time from repayment_details where user_id = '{$id}' and payment_time < '{$first_day_timestamp}') tbl 
 order by payment_time desc;";
 $result1 = $conn->query($sql);
 if($result1-> num_rows > 0) {
@@ -384,6 +380,7 @@ $pdf->Cell(45,8,'Fee Amount', 1, 0);
 $pdf->Cell(45,8,'Status', 1, 1);
 
 // write sql query here
+$day_8 = date("Y-m-08", strtotime($first_day_date));
 $sql = "SELECT
 date_format(date_sub(billed_date, interval 1 month), '%b %Y') as billing_month,
 fee_type,
@@ -393,7 +390,7 @@ when fl_paid = 0 then 'charged'
 when fl_paid = 1 then 'paid'
 end) as status
 FROM
-fee_payment_details where user_id='{$id}'
+fee_payment_details where user_id='{$id}' and billed_date <='{$day_8}'
 order by billed_date desc;";
 $result1 = $conn->query($sql);
 if($result1-> num_rows > 0) {
@@ -491,7 +488,7 @@ Bengaluru, Karnataka, 560099', 0, 1);
 $x2 = $pdf->GetX();
 $y2 = $pdf->GetY();
 $pdf->SetXY($x2+80, $y2);
-$whatsapp = "https://wa.me/918431568414/?text=hii";
+$whatsapp = "https://wa.me/918431568414/?text=Hii";
 $pdf->Cell(45,8,'Whatsapp: +91 8431568414','0','1','',false, $whatsapp);
 
 $pdf->SetLineWidth(0.5);

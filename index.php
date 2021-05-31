@@ -15,6 +15,9 @@
   <div class = "row">
   <div class = "col align-items-center">
     <h1>Aspire Digital Credit Card</h1><br>
+    <?php
+    echo "Hello ".getenv("USER_NAME");
+    ?>
     <p><b>Please enter your registered mobile number</b></p>
       <form action="invoice.php" method="get">
     
@@ -22,8 +25,8 @@
 
     <select name = "billing_month">
     <option name="" value="" disabled selected>Month</option>
-    <option value="January" value="Jan">January</option>
-    <option value="February" value="Feb">February</option>
+    <option value="January">January</option>
+    <option value="February">February</option>
     <option value="March">March</option>
     <option value="April">April</option>
     <option value="May">May</option>

@@ -298,7 +298,7 @@ $x1 = $pdf->GetX();
 $y1 = $pdf->GetY();
 if($DPD == 0)
 {
-	$pdf->MultiCell(180,8,'Congratulations! on improving your credit score (all bureaus including CIBIL) with on time payment before or on 8th May.',0,1);
+	$pdf->MultiCell(180,8,'Congratulations! on improving your credit score (all bureaus including CIBIL) with on time payment before or on '.$due_date.'.',0,1);
 }else {
 	$pdf->MultiCell(180,8,'New year brings new hope! Please pay your dues to make the new year financially happy!',0,1);
 }

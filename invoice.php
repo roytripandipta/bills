@@ -203,7 +203,7 @@ if($result-> num_rows > 0) {
 		$pdf->SetTextColor(0,0,0);
 		$x = $pdf->GetX();
 		$y = $pdf->GetY();
-		$row['address'] = str_replace(array("\r", "\n"), '', $row['address']);
+		$row['address'] = str_replace(array("\r", "\n"), ' ', $row['address']);
 		$pdf->MultiCell(100,8,substr(trim($row['address']),0, 100).' '.$row['pin_code'],0,0);
 		$pdf->SetXY($x + 120, $y-2);
 		$pdf->SetFont('Arial','B',15);

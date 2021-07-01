@@ -215,7 +215,7 @@ if($result-> num_rows > 0) {
 		$y = $pdf->GetY();
 		$pdf->SetXY($x + 120, $y+2);
 		$y = $pdf->GetY();
-		$pdf->MultiCell(60,5,'Late Charges:  300 + GST for payments after '.$due_date,0,1);
+		$pdf->MultiCell(60,5,'Late Charges: '.$row['late_fee'].' + GST for payments after '.$due_date,0,1);
 		$pdf->SetXY($x, $y+18);
 		$pdf->Cell(120,10,'Phone: '.$row['phone_number'],0,1);
 

@@ -508,6 +508,6 @@ $pdf->Cell(80,8,'PAN: AATCA6761C', 0, 1);
 
 //output the result
 ob_start();
-$pdf->Output();
+$pdf->Output('I', $billing_month.' '.$billing_year.' Statement.pdf');
  
 ?>

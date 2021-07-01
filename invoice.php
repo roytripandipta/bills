@@ -215,12 +215,13 @@ if($result-> num_rows > 0) {
 		$y = $pdf->GetY();
 		$pdf->SetXY($x + 120, $y+2);
 		$y = $pdf->GetY();
-		$pdf->MultiCell(60,5,'Late Charges: '.$row['late_fee'].' + GST for payments after '.$due_date,0,1);
+		$pdf->MultiCell(60,5,'Late Charges: 300 + GST for payments after '.$due_date,0,1);
 		$pdf->SetXY($x, $y+18);
 		$pdf->Cell(120,10,'Phone: '.$row['phone_number'],0,1);
 
 		$x2 = $pdf->GetX();
 		$y2 = $pdf->GetY();
+
 		$pdf->SetLineWidth(0.5);
 		$pdf -> RoundedRect($x1-1,$y1-2,$pdf->GetPageWidth()/2,$y2-$y1+15,1.5,'D');
 		$pdf -> RoundedRect($x1+$pdf->GetPageWidth()/2+10,$y1-2,$pdf->GetPageWidth()/2-25,$y2-$y1,1.5,'D');

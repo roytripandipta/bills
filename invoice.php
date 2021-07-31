@@ -175,6 +175,7 @@ if($result2 -> num_rows > 0) {
 		$last_day_prev_month = $row["last_day_prev_month"];
 		$first_day_timestamp = $row["first_day_timestamp"];
 		$first_day_date = $row["first_day_date"];
+		$late_fees = $row["latefees"];
 		break;
 	}
 }
@@ -215,12 +216,13 @@ if($result-> num_rows > 0) {
 		$y = $pdf->GetY();
 		$pdf->SetXY($x + 120, $y+2);
 		$y = $pdf->GetY();
-		if ($late_fee == 0) {
-			$pdf->MultiCell(60,5,'Late Charges: 300 + GST for payments after 8 May 2021',0,1);
-		}
-		else {
-			$pdf->MultiCell(60,5,'Late Charges: '.$late_fee.' + GST for payments after 8 May 2021',0,1);
-		}
+		// if ($late_fee == 0) {
+		// 	$pdf->MultiCell(60,5,'Late Charges: 300 + GST for payments after 8 May 2021',0,1);
+		// }
+		// else {
+		// 	$pdf->MultiCell(60,5,'Late Charges: '.$late_fee.' + GST for payments after 8 May 2021',0,1);
+		// }
+		$pdf->MultiCell(60,5,'Late Charges: '.number_format($late_fees,2,'.',',').' + GST for payments after 8 May 2021',0,1);
 		$pdf->SetXY($x, $y+18);
 		$pdf->Cell(120,10,'Phone: '.$row['phone_number'],0,1);
 

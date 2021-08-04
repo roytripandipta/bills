@@ -153,6 +153,7 @@ $due_date = "";
 $last_day_prev_month = "";
 $first_day_timestamp = "";
 $first_day_date = "";
+$late_fees = 0;
 
 $sql_2 = "select * from billing_info where user_id = '{$id}' and billing_month = '{$billing_month}' and billing_year = {$billing_year}";
 $result2 = $conn->query($sql_2);
@@ -222,7 +223,7 @@ if($result-> num_rows > 0) {
 		// else {
 		// 	$pdf->MultiCell(60,5,'Late Charges: '.$late_fee.' + GST for payments after 8 May 2021',0,1);
 		// }
-		$pdf->MultiCell(60,5,'Late Charges: '.number_format($late_fees,2,'.',',').' + GST for payments after 8 May 2021',0,1);
+		$pdf->MultiCell(60,5,'Late Charges: '.number_format($late_fees,2,'.',',').' + GST for payments after '.$due_date,0,1);
 		$pdf->SetXY($x, $y+18);
 		$pdf->Cell(120,10,'Phone: '.$row['phone_number'],0,1);
 

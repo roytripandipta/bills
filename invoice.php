@@ -254,7 +254,7 @@ if($result-> num_rows > 0) {
 		$pdf->SetFont('Arial','B',11);
 		$pdf->setFillColor(255,255,255);
 
-		$pdf->Cell(59, 8,' ',0,1);//end of line
+		$pdf->Cell(59, 5,' ',0,1);//end of line
 
 		$pdf->Cell(120, 10, 'Summary of Charges', 0, 1);
 		$x = $pdf->GetX();

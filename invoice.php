@@ -282,6 +282,9 @@ if($result-> num_rows > 0) {
 		$pdf->Cell(120,8, 'Net Due', 1, 0);
 		$pdf->Cell(60,8, $pdf->Image('inr.jpg',$pdf->GetX()+20,$pdf->GetY()+2, 3, 3).'     '.number_format($payment_min,2,'.',','), 1, 1,'C');
 
+		$pdf->Cell(120,8, 'Principal Outstanding', 1, 0);
+		$pdf->Cell(60,8, $pdf->Image('inr.jpg',$pdf->GetX()+20,$pdf->GetY()+2, 3, 3).'     '.number_format($payment_max,2,'.',','), 1, 1,'C');
+
 		$pdf->Cell(59 ,8,' ',0,1);//end of line
 
 		$pdf->Cell(120,5,'Credit Line Standing as on '.$last_day_prev_month,0,1);

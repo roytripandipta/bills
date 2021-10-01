@@ -116,9 +116,9 @@ $pdf->Cell(59 ,5,' ',0,1);//end of line
 $x = $pdf->GetPageWidth()/2;
 $y = $pdf->GetY();
 $pdf->SetLineWidth(0.5);
-$pdf -> Rect($x-30,$y-2,60,9,'D');
+$pdf -> Rect($x-30,$y-2,70,9,'D');
 $pdf->SetLineWidth(0.2);
-$pdf->Cell(200 ,5,$billing_month.' '.$billing_year.' Statement',0,1,'C');//end of line
+$pdf->Cell(190 ,5,$billing_month.' '.$billing_year.' Statement',0,1,'C');//end of line
 $pdf->SetFont('Arial','B',11);
 
 $sql = "select id from user where phone_number = '{$phone_number}' limit 1";

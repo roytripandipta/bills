@@ -435,27 +435,43 @@ $pdf->Cell(28,8,'Refund Status', 1, 0);
 $pdf->Cell(30,8,'Reference ID', 1, 1);
 
 // write sql query here
+// $sql = "SELECT 
+// STR_TO_DATE(m.created_time, '%Y-%m-%d') AS `date_of_txn`,
+// d.amount as `down_payment_amount`,
+// str_to_date(r.refund_date, '%Y-%m-%d') as `refund_date`,
+// r.amount as `refund_amount`,
+// r.refund_status as `refund_status`,
+// r.asp_request_id as `refund_reference_id`
+// FROM
+// down_payment_details d
+// 	LEFT JOIN
+// merchant_payments m ON d.txn_id = m.down_payment_transaction_id
+// left join 
+// refund_payment_details r
+// on
+// d.txn_id = r.down_payment_transaction_id
+// WHERE
+// d.user_id='{$id}'
+// and
+// d.status = 'success'
+// 	AND (m.status <> 'success'
+// 	OR m.status IS NULL)
+// 	order by m.created_time desc";
+
+
 $sql = "SELECT 
 STR_TO_DATE(m.created_time, '%Y-%m-%d') AS `date_of_txn`,
-d.amount as `down_payment_amount`,
 str_to_date(r.refund_date, '%Y-%m-%d') as `refund_date`,
 r.amount as `refund_amount`,
 r.refund_status as `refund_status`,
 r.asp_request_id as `refund_reference_id`
 FROM
-down_payment_details d
-	LEFT JOIN
-merchant_payments m ON d.txn_id = m.down_payment_transaction_id
-left join 
 refund_payment_details r
-on
-d.txn_id = r.down_payment_transaction_id
+	LEFT JOIN
+merchant_payments m ON r.down_payment_transaction_id = m.down_payment_transaction_id
+
 WHERE
-d.user_id='{$id}'
-and
-d.status = 'success'
-	AND (m.status <> 'success'
-	OR m.status IS NULL)
+r.user_id='{$id}'
 	order by m.created_time desc";
 
 $result1 = $conn->query($sql);

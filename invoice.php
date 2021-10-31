@@ -460,7 +460,8 @@ $pdf->Cell(30,8,'Reference ID', 1, 1);
 
 
 $sql = "SELECT 
-STR_TO_DATE(m.created_time, '%Y-%m-%d') AS `date_of_txn`,
+STR_TO_DATE(d.created_at, '%Y-%m-%d') AS `date_of_txn`,
+d.amount as `down_payment_amount`,
 str_to_date(r.refund_date, '%Y-%m-%d') as `refund_date`,
 r.amount as `refund_amount`,
 r.refund_status as `refund_status`,
@@ -468,11 +469,10 @@ r.asp_request_id as `refund_reference_id`
 FROM
 refund_payment_details r
 	LEFT JOIN
-merchant_payments m ON r.down_payment_transaction_id = m.down_payment_transaction_id
-
+downpayment_summary d ON r.down_payment_transaction_id = d.transaction_id
 WHERE
 r.user_id='{$id}'
-	order by m.created_time desc";
+	order by d.created_at desc";
 
 $result1 = $conn->query($sql);
 if($result1-> num_rows > 0) {

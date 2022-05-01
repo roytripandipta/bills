@@ -332,13 +332,13 @@ $pdf->Cell(50,8,'Amount', 1, 1);
 
 $sql = "SELECT 
       SUBSTR(m.created_time, 1, 10) as created_time,
-      m1.merchant_name,
+      m1.beneficiary_account_name,
       m.amount
      
   FROM
       merchant_payments AS m
           LEFT JOIN
-      merchant_details AS m1 ON m.merchant_id = m1.merchant_id
+      merchant_payment_details AS m1 ON m.session_id = m1.session_id
   WHERE
       m.user_id = '{$id}'
           AND m.`status` = 'success'
